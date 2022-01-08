@@ -29,17 +29,17 @@ public class QuestionRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
-        return route(
-                GET("/getOwnerAll/{userId}"),
-                request -> ServerResponse.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(
-                                ownerListUseCase.apply(request.pathVariable("userId")),
-                                QuestionDTO.class
-                         ))
-        );
-    }
+        public RouterFunction<ServerResponse> getOwnerAll(OwnerListUseCase ownerListUseCase) {
+            return route(
+                    GET("/getOwnerAll/{userId}"),
+                    request -> ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(BodyInserters.fromPublisher(
+                                    ownerListUseCase.apply(request.pathVariable("userId")),
+                                    QuestionDTO.class
+                             ))
+            );
+        }
 
     @Bean
     public RouterFunction<ServerResponse> create(CreateUseCase createUseCase) {
