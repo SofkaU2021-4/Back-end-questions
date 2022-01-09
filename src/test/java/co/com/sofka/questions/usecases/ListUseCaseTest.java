@@ -1,6 +1,8 @@
 package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.collections.Question;
+import co.com.sofka.questions.enums.Category;
+import co.com.sofka.questions.enums.Type;
 import co.com.sofka.questions.reposioties.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,17 +30,17 @@ class ListUseCaseTest {
      void getValidationTest(){
         var question =  new Question();
         question.setUserId("xxxx-xxxx");
-        question.setType("tech");
-        question.setCategory("software");
+        question.setType(Type.OPEN);
+        question.setCategory(Category.SOFTWARE_DEVELOPMENT);
         question.setQuestion("¿Que es java?");
         when(repository.findAll()).thenReturn(Flux.just(question ));
 
         StepVerifier.create(listUseCase.get())
                 .expectNextMatches(questionDTO -> {
                     assert questionDTO.getUserId().equals("xxxx-xxxx");
-                    assert questionDTO.getCategory().equals("software");
+                    assert questionDTO.getCategory().equals(Category.SOFTWARE_DEVELOPMENT);
                     assert questionDTO.getQuestion().equals("¿Que es java?");
-                    assert questionDTO.getType().equals("tech");
+                    assert questionDTO.getType().equals(Type.OPEN);
                     return true;
                 })
                 .verifyComplete();

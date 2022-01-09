@@ -123,9 +123,7 @@ public class QuestionRouter {
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(getUseCase.apply(
-                                        request.pathVariable("id")),
-                                UserDTO.class
-                        ))
+                                        request.pathVariable("id")), UserDTO.class))
         );
     }
 }

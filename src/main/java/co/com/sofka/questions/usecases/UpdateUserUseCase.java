@@ -26,9 +26,9 @@ public class UpdateUserUseCase implements SaveUser{
 
     @Override
     public Mono<String> apply(UserDTO userDTO) {
-        Objects.requireNonNull(userDTO.getId(), "Id of the question is required");
+        Objects.requireNonNull(userDTO.getUid(), "Id of the question is required");
         return repository
-                .save(mapperUtils.mapperToUser(userDTO.getId()).apply(userDTO))
-                .map(User::getId);
+                .save(mapperUtils.mapperToUser(userDTO.getUid()).apply(userDTO))
+                .map(User::getUid);
     }
 }

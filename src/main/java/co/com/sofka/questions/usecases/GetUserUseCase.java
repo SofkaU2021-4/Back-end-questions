@@ -2,8 +2,10 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.model.UserDTO;
 import co.com.sofka.questions.reposioties.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
@@ -22,7 +24,8 @@ public class GetUserUseCase implements Function<String, Mono<UserDTO>> {
 
     @Override
     public Mono<UserDTO> apply(String s) {
-        return repository.findById(s)
-                .map(mapperUtils.mapEntityToUser());
+        return repository.findByUid(s)
+                .map(mapperUtils.mapEntityToUser())
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 }
