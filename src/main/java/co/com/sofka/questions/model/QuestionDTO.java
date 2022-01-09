@@ -16,9 +16,7 @@ public class QuestionDTO {
     private String userId;
     @NotBlank
     private String question;
-    @NotBlank
     private Type type;
-    @NotBlank
     private Category category;
     private List<AnswerDTO> answers;
     private UserDTO userDTO;
