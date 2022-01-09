@@ -43,8 +43,7 @@ public class MapperUtils {
                 entity.getUserId(),
                 entity.getQuestion(),
                 entity.getType(),
-                entity.getCategory()
-        );
+                entity.getCategory());
     }
 
     public Function<Answer, AnswerDTO> mapEntityToAnswer() {

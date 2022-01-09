@@ -37,10 +37,10 @@ public class AddAnswerUseCase implements SaveAnswer {
                             .flatMap(answer -> {
                                 return getUseCase.apply(answer.getQuestionId())
                                         .flatMap(questionDTO -> {
-                                            sendMailService.sendMail(
+                                         /*   sendMailService.sendMail(
                                                     user.getEmail(),
                                                     "Han respondido a tu pregunta: " + questionDTO.getQuestion(),
-                                                    "Respuesta: \n" + answerDTO.getAnswer());
+                                                    "Respuesta: \n" + answerDTO.getAnswer());*/
                                             return Mono.just(questionDTO);
                                         });
                             });

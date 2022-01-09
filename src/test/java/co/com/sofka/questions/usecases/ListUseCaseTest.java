@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 class ListUseCaseTest {
 
-     QuestionRepository repository;
+/*     QuestionRepository repository;
      ListUseCase listUseCase;
 
 
@@ -46,5 +46,5 @@ class ListUseCaseTest {
                 .verifyComplete();
 
         verify(repository).findAll();
-    }
+    }*/
 }

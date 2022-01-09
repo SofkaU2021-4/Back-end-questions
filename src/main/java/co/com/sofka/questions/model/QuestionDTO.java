@@ -21,6 +21,7 @@ public class QuestionDTO {
     @NotBlank
     private Category category;
     private List<AnswerDTO> answers;
+    private UserDTO userDTO;
 
 
     public QuestionDTO() {
@@ -41,11 +42,20 @@ public class QuestionDTO {
         this.question = question;
         this.type = type;
         this.category = category;
+
     }
 
     public List<AnswerDTO> getAnswers() {
         this.answers = Optional.ofNullable(answers).orElse(new ArrayList<>());
         return answers;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     public void setAnswers(List<AnswerDTO> answers) {
@@ -97,11 +107,11 @@ public class QuestionDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuestionDTO that = (QuestionDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(question, that.question) && type == that.type && category == that.category && Objects.equals(answers, that.answers);
+        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(question, that.question) && type == that.type && category == that.category && Objects.equals(answers, that.answers) && Objects.equals(userDTO, that.userDTO);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, question, type, category, answers);
+        return Objects.hash(id, userId, question, type, category, answers, userDTO);
     }
 }
