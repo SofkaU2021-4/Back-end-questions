@@ -5,10 +5,10 @@ import co.com.sofka.questions.enums.Category;
 import co.com.sofka.questions.enums.Type;
 
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 public class QuestionDTO {
     private String id;
@@ -16,11 +16,15 @@ public class QuestionDTO {
     private String userId;
     @NotBlank
     private String question;
+    @NotNull
     private Type type;
+    @NotNull
     private Category category;
     private List<AnswerDTO> answers;
     private UserDTO userDTO;
-
+    private LocalDate fechaCreacion = LocalDate.now();
+    @NotBlank
+    private String descripcion;
 
     public QuestionDTO() {
 
@@ -34,18 +38,35 @@ public class QuestionDTO {
 
     }
 
-    public QuestionDTO(String id, String userId, String question, Type type, Category category) {
+    public QuestionDTO(String id, String userId, String question, Type type, Category category ,String descripcion) {
         this.id = id;
         this.userId = userId;
         this.question = question;
         this.type = type;
         this.category = category;
+        this.descripcion = descripcion;
+        this.fechaCreacion=LocalDate.now();
+    }
 
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
     }
 
     public List<AnswerDTO> getAnswers() {
         this.answers = Optional.ofNullable(answers).orElse(new ArrayList<>());
         return answers;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public UserDTO getUserDTO() {
@@ -105,11 +126,11 @@ public class QuestionDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuestionDTO that = (QuestionDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(question, that.question) && type == that.type && category == that.category && Objects.equals(answers, that.answers) && Objects.equals(userDTO, that.userDTO);
+        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(question, that.question) && type == that.type && category == that.category && Objects.equals(answers, that.answers) && Objects.equals(userDTO, that.userDTO) && Objects.equals(fechaCreacion, that.fechaCreacion) && Objects.equals(descripcion, that.descripcion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, question, type, category, answers, userDTO);
+        return Objects.hash(id, userId, question, type, category, answers, userDTO, fechaCreacion, descripcion);
     }
 }

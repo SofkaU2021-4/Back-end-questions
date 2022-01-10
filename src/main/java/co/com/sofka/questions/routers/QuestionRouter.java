@@ -86,7 +86,7 @@ public class QuestionRouter {
                 DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.accepted()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
+                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), QuestionDTO.class))
         );
     }
 
@@ -107,7 +107,7 @@ public class QuestionRouter {
     public RouterFunction<ServerResponse> updateUser(UpdateUserUseCase updateUseCase) {
         Function<UserDTO, Mono<ServerResponse>> executor = userDTO -> updateUseCase.apply(userDTO)
                 .flatMap(result -> ServerResponse.ok()
-                        .contentType(MediaType.TEXT_PLAIN)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(result));
 
         return route(

@@ -2,6 +2,7 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -12,18 +13,38 @@ import java.util.Optional;
         private String questionId;
         @NotBlank
         private String answer;
-
         private Integer position;
+        private UserDTO userDTO;
+        private LocalDate fechaCreacio = LocalDate.now();
+
+
 
 
         public AnswerDTO() {
 
         }
 
-        public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer) {
+        public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer ) {
             this.userId = userId;
             this.questionId = questionId;
             this.answer = answer;
+            this.fechaCreacio = LocalDate.now();
+        }
+
+        public UserDTO getUserDTO() {
+            return userDTO;
+        }
+
+        public void setUserDTO(UserDTO userDTO) {
+            this.userDTO = userDTO;
+        }
+
+        public LocalDate getFechaCreacio() {
+            return fechaCreacio;
+        }
+
+        public void setFechaCreacio(LocalDate fechaCreacio) {
+            this.fechaCreacio = fechaCreacio;
         }
 
         public Integer getPosition() {
@@ -64,20 +85,11 @@ import java.util.Optional;
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             AnswerDTO answerDTO = (AnswerDTO) o;
-            return Objects.equals(userId, answerDTO.userId);
+            return Objects.equals(userId, answerDTO.userId) && Objects.equals(questionId, answerDTO.questionId) && Objects.equals(answer, answerDTO.answer) && Objects.equals(position, answerDTO.position) && Objects.equals(userDTO, answerDTO.userDTO) && Objects.equals(fechaCreacio, answerDTO.fechaCreacio);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(userId);
-        }
-
-        @Override
-        public String toString() {
-            return "AnswerDTO{" +
-                    "userId='" + userId + '\'' +
-                    ", questionId='" + questionId + '\'' +
-                    ", answer='" + answer + '\'' +
-                    '}';
+            return Objects.hash(userId, questionId, answer, position, userDTO, fechaCreacio);
         }
     }

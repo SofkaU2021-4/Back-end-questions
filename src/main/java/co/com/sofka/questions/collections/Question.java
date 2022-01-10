@@ -5,6 +5,8 @@ import co.com.sofka.questions.enums.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 
 @Document
 public class Question {
@@ -14,7 +16,24 @@ public class Question {
     private String question;
     private Type type;
     private Category category;
+    private LocalDate fechaCreacio;
+    private String descripcion;
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public LocalDate getFechaCreacio() {
+        return fechaCreacio;
+    }
+
+    public void setFechaCreacio(LocalDate fechaCreacio) {
+        this.fechaCreacio = fechaCreacio;
+    }
 
     public String getId() {
         return id;

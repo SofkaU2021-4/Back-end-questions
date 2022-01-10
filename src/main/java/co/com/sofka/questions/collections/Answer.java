@@ -3,6 +3,8 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Document
 public class Answer {
     @Id
@@ -11,6 +13,15 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
+    private LocalDate fechaCreacio;
+
+    public LocalDate getFechaCreacio() {
+        return fechaCreacio;
+    }
+
+    public void setFechaCreacio(LocalDate fechaCreacio) {
+        this.fechaCreacio = fechaCreacio;
+    }
 
     public Integer getPosition() {
         return position;
