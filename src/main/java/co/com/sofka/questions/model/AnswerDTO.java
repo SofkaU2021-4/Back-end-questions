@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
     public class AnswerDTO {
+        private String id;
         @NotBlank(message = "Debe existir el userId para este objeto")
         private String userId;
         @NotBlank
@@ -24,11 +25,21 @@ import java.util.Optional;
 
         }
 
-        public AnswerDTO(@NotBlank String questionId, @NotBlank String userId, @NotBlank String answer ) {
+
+        public AnswerDTO(String id, String questionId, @NotBlank String userId, @NotBlank String answer ) {
+            this.id = id;
             this.userId = userId;
             this.questionId = questionId;
             this.answer = answer;
             this.fechaCreacio = LocalDate.now();
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
         public UserDTO getUserDTO() {
@@ -85,11 +96,11 @@ import java.util.Optional;
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             AnswerDTO answerDTO = (AnswerDTO) o;
-            return Objects.equals(userId, answerDTO.userId) && Objects.equals(questionId, answerDTO.questionId) && Objects.equals(answer, answerDTO.answer) && Objects.equals(position, answerDTO.position) && Objects.equals(userDTO, answerDTO.userDTO) && Objects.equals(fechaCreacio, answerDTO.fechaCreacio);
+            return Objects.equals(id, answerDTO.id) && Objects.equals(userId, answerDTO.userId) && Objects.equals(questionId, answerDTO.questionId) && Objects.equals(answer, answerDTO.answer) && Objects.equals(position, answerDTO.position) && Objects.equals(userDTO, answerDTO.userDTO) && Objects.equals(fechaCreacio, answerDTO.fechaCreacio);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(userId, questionId, answer, position, userDTO, fechaCreacio);
+            return Objects.hash(id, userId, questionId, answer, position, userDTO, fechaCreacio);
         }
     }

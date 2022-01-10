@@ -89,6 +89,16 @@ public class QuestionRouter {
                         .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), QuestionDTO.class))
         );
     }
+    @Bean
+    public RouterFunction<ServerResponse> deleteAnswer(DeleteAnswerUseCase deleteAnswerUseCase) {
+        return route(
+                DELETE("/answer/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .body(BodyInserters.fromPublisher(deleteAnswerUseCase.apply(
+                                request.pathVariable("id")), String.class))
+        );
+    }
 
     @Bean
     public RouterFunction<ServerResponse> createUser(CreateUserUseCase createUseCase) {
@@ -126,4 +136,5 @@ public class QuestionRouter {
                                         request.pathVariable("id")), UserDTO.class))
         );
     }
+
 }
