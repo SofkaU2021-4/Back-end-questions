@@ -2,12 +2,15 @@ package co.com.sofka.questions.usecases;
 
 import co.com.sofka.questions.collections.Answer;
 import co.com.sofka.questions.collections.Question;
+import co.com.sofka.questions.collections.User;
 import co.com.sofka.questions.enums.Category;
 import co.com.sofka.questions.enums.Type;
 import co.com.sofka.questions.reposioties.AnswerRepository;
 import co.com.sofka.questions.reposioties.QuestionRepository;
+import co.com.sofka.questions.reposioties.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -16,27 +19,29 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
-class DeleteUseCaseTest {
+class GetUseCaseTest {
 
     QuestionRepository questionRepository;
     AnswerRepository answerRepository;
     MapperUtils mapperUtils;
-    DeleteUseCase deleteUseCase;
+    UserRepository userRepository;
+    GetUseCase getUseCase;
 
     @BeforeEach
     public void setup(){
         MapperUtils mapperUtils = new MapperUtils();
-        answerRepository = mock(AnswerRepository.class);
+        userRepository = mock(UserRepository.class);
         questionRepository = mock(QuestionRepository.class);
-        deleteUseCase = new DeleteUseCase(answerRepository,questionRepository,mapperUtils);
+        answerRepository = mock(AnswerRepository.class);
+        getUseCase = new GetUseCase(mapperUtils,questionRepository,answerRepository,userRepository);
+
     }
 
     @Test
-    void deleteUseCase(){
-
+    void getUseCase(){
         var question= new Question();
         question.setId("xxxxx-xxx");
-        question.setUserId("xxxx-xxxxyyy");
+        question.setUserId("xxxx-xxxx");
         question.setType(Type.OPEN);
         question.setCategory(Category.SCIENCES);
         question.setQuestion("¿Que es java?");
@@ -48,25 +53,30 @@ class DeleteUseCaseTest {
         answer.setUserId("1234");
         answer.setAnswer("Domain Driven Design");
 
-        when(questionRepository.findById((String) any())).thenReturn(Mono.just(question));
-        when(questionRepository.deleteById((String) any())).thenReturn(Mono.empty());
-        when(answerRepository.deleteAllByQuestionId(any())).thenReturn(Mono.empty());
+        var user = new User();
+        user.setEmail("jscrojas25@yahoo.es");
+        user.setId("123456789");
+        user.setUid("564897");
+        user.setPictureUrl("url/picture");
+        user.setName("sebastian cabrera");
 
-        StepVerifier.create(deleteUseCase.apply("xxxxx-xxx"))
+
+
+        when(questionRepository.findById((String) any())).thenReturn(Mono.just(question));
+        when(answerRepository.findAllByQuestionId(any())).thenReturn(Flux.just(answer));
+        when(userRepository.findByUid(any())).thenReturn(Mono.just(user));
+
+        StepVerifier.create(getUseCase.apply("xxxxx-xxx"))
                 .expectNextMatches(questionDTO->{
                     assert questionDTO.getId().equals("xxxxx-xxx");
-                    assert questionDTO.getUserId().equals("xxxx-xxxxyyy");
-                    assert questionDTO.getType().equals(Type.OPEN);
+                    assert questionDTO.getUserDTO().getUid().equals("564897");
                     return true;
                 }).verifyComplete();
 
         verify(questionRepository).findById((String) any());
-        verify(questionRepository).deleteById((String) any());
-        verify(answerRepository).deleteAllByQuestionId( any());
-
+        verify(answerRepository).findAllByQuestionId(any());
+        verify(userRepository,times(2)).findByUid(any());
 
     }
-
-
 
 }
