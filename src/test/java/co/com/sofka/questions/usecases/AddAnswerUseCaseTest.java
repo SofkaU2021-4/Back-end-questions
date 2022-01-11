@@ -60,6 +60,7 @@ class AddAnswerUseCaseTest {
         Assertions.assertEquals(resultQuestionDTO.getId(),question.getId());
         Assertions.assertEquals(resultQuestionDTO.getQuestion(),question.getQuestion());
 
+
         Mockito.verify(answerRepository,Mockito.times(1)).save(Mockito.any());
 
 
